@@ -1,6 +1,7 @@
 FROM zooniverse/nginx
 
-RUN mkdir -p /nginx-cache/ /var/log/static/ /logstash/static/
+RUN mkdir -p /nginx-cache/ /var/log/static/ /logstash/static/ && \
+    touch /etc/nginx-deny.conf
 
 ADD nginx.conf /etc/nginx/nginx.conf
 ADD nginx-redirects.conf /etc/nginx/redirects.conf
