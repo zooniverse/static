@@ -1,4 +1,4 @@
-FROM zooniverse/nginx
+FROM zooniverse/nginx:alpine
 
 RUN mkdir -p /nginx-cache/ /var/log/static/ /logstash/static/ && \
     touch /etc/nginx-deny.conf
