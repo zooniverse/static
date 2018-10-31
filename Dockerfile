@@ -10,6 +10,7 @@ ADD nginx-proxy-headers.conf /etc/nginx/proxy-headers.conf
 ADD nginx-api-proxy.conf /etc/nginx/api-proxy.conf
 ADD logstash-nginx.conf /logstash/static/logstash-nginx.conf
 ADD sites/ /etc/nginx/sites/
+ADD logrotate.conf /etc/logrotate.d/static
 
 VOLUME /var/log/static/
 VOLUME /logstash/static/
