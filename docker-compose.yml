@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  imgproc:
+    image: zooniverse/image-processing
+
+  static:
+    build:
+      context:  ./
+      dockerfile: Dockerfile
+    links:
+      - imgproc:imgproc
+    ports:
+      - "8080:80"
