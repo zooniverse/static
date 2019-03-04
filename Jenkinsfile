@@ -50,31 +50,40 @@ pipeline {
     }
 
     stage('Update latest tag') {
+      when { branch 'master' }
       steps {
         script {
-          if (BRANCH_NAME == 'master') {
-            newImage.push('latest')
-          }
+          newImage.push('latest')
         }
       }
     }
 
     stage('Build EC2 AMI') {
+      when { branch 'master' }
+      agent {
+        docker {
+          image 'zooniverse/operations:latest'
+          args '-v "$HOME/.ssh/:/home/ubuntu/.ssh" -v "$HOME/.aws/:/home/ubuntu/.aws"'
+        }
+      }
       steps {
         script {
-          if (BRANCH_NAME == 'master') {
-            sh 'cd "/var/jenkins_home/jobs/Zooniverse GitHub/jobs/operations/branches/master/workspace" && ./rebuild.sh http-frontend'
-          }
+          sh 'cd "/var/jenkins_home/jobs/Zooniverse GitHub/jobs/operations/branches/master/workspace" && ./rebuild.sh http-frontend'
         }
       }
     }
 
     stage('Deploy to AWS') {
+      when { branch 'master' }
+      agent {
+        docker {
+          image 'zooniverse/operations:latest'
+          args '-v "$HOME/.ssh/:/home/ubuntu/.ssh" -v "$HOME/.aws/:/home/ubuntu/.aws"'
+        }
+      }
       steps {
         script {
-          if (BRANCH_NAME == 'master') {
-            sh 'cd "/var/jenkins_home/jobs/Zooniverse GitHub/jobs/operations/branches/master/workspace" && ./deploy_latest.sh http-frontend'
-          }
+          sh 'cd "/var/jenkins_home/jobs/Zooniverse GitHub/jobs/operations/branches/master/workspace" && ./deploy_latest.sh http-frontend'
         }
       }
     }
