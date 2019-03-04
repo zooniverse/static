@@ -13,13 +13,15 @@ node {
 
     stage('Test HTTP response') {
         docker.image('zooniverse/image-processing').withRun('-e NODE_ENV=production') { img_proc_c ->
-            docker.image(dockerImageName).withRun("--link ${img_proc_c.id}:imgproc -p 10004:443") { nginx_c ->
+            docker.image(dockerImageName).withRun("--link ${img_proc_c.id}:imgproc") { nginx_c ->
                 sleep 30
                 sh "docker logs ${nginx_c.id}"
-                sh "curl -vk https://jenkins-instance.zooniverse.org:10004/index.html"
+                docker.image('alpine').inside("-u 0 --link ${nginx_c.id}:nginx") {
+                    sh "apk add --no-cache curl"
+                    sh "curl -vk https://nginx/index.html"
+                }
             }
         }
-
     }
 
     if (BRANCH_NAME == 'master') {
