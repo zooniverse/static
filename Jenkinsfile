@@ -68,7 +68,7 @@ pipeline {
       }
       steps {
         script {
-          sh 'cd "/var/jenkins_home/jobs/Zooniverse GitHub/jobs/operations/branches/master/workspace" && ./rebuild.sh http-frontend'
+          sh 'cd /operations && ./rebuild.sh http-frontend'
         }
       }
     }
@@ -83,7 +83,7 @@ pipeline {
       }
       steps {
         script {
-          sh 'cd "/var/jenkins_home/jobs/Zooniverse GitHub/jobs/operations/branches/master/workspace" && ./deploy_latest.sh http-frontend'
+          sh 'cd /operations && ./deploy_latest.sh http-frontend'
         }
       }
     }
