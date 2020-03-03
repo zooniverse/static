@@ -1,7 +1,7 @@
 #!groovy
 
-dockerImageName = 'zooniverse/http-frontend:${BRANCH_NAME}'
-newImage = null
+def dockerRepoName = 'zooniverse/http-frontend'
+def newImage = null
 
 pipeline {
   agent none
@@ -11,6 +11,7 @@ pipeline {
   }
 
   stages {
+
     stage('Notify Slack') {
       when { branch 'master' }
       agent any
@@ -24,18 +25,24 @@ pipeline {
     }
 
     stage('Build Docker image') {
+      agent any
       steps {
         script {
-          newImage = docker.build(dockerImageName)
+          newImage = docker.build("${dockerRepoName}:${GIT_COMMIT}")
           newImage.push()
+
+          if (BRANCH_NAME == 'master') {
+            newImage.push('latest')
+          }
         }
       }
     }
 
     stage('Test HTTP response') {
+      agent any
       steps {
         script {
-          docker.image(dockerImageName).withRun() { nginx_c ->
+          docker.image("${dockerRepoName}:${GIT_COMMIT}").withRun() { nginx_c ->
             sleep 30
             sh "docker logs ${nginx_c.id}"
             docker.image('alpine').inside("-u 0 --link ${nginx_c.id}:nginx") {
@@ -56,33 +63,11 @@ pipeline {
       }
     }
 
-    stage('Build EC2 AMI') {
+    stage('Deploy to Kubernetes') {
       when { branch 'master' }
-      agent {
-        docker {
-          image 'zooniverse/operations:latest'
-          args '-v "$HOME/.ssh/:/home/ubuntu/.ssh" -v "$HOME/.aws/:/home/ubuntu/.aws"'
-        }
-      }
+      agent any
       steps {
-        script {
-          sh 'cd /operations && ./rebuild.sh http-frontend'
-        }
-      }
-    }
-
-    stage('Deploy to AWS') {
-      when { branch 'master' }
-      agent {
-        docker {
-          image 'zooniverse/operations:latest'
-          args '-v "$HOME/.ssh/:/home/ubuntu/.ssh" -v "$HOME/.aws/:/home/ubuntu/.aws"'
-        }
-      }
-      steps {
-        script {
-          sh 'cd /operations && ./deploy_latest.sh http-frontend'
-        }
+        sh "sed 's/__IMAGE_TAG__/${GIT_COMMIT}/g' kubernetes/deployment.tmpl | kubectl --context azure apply --record -f -"
       }
     }
   }
