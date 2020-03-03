@@ -1,9 +1,6 @@
 version: '3'
 
 services:
-  imgproc:
-    image: zooniverse/image-processing
-
   static:
     build:
       context:  ./
