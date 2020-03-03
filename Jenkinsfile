@@ -35,14 +35,12 @@ pipeline {
     stage('Test HTTP response') {
       steps {
         script {
-          docker.image('zooniverse/image-processing').withRun('-e NODE_ENV=production') { img_proc_c ->
-            docker.image(dockerImageName).withRun("--link ${img_proc_c.id}:imgproc") { nginx_c ->
-              sleep 30
-              sh "docker logs ${nginx_c.id}"
-              docker.image('alpine').inside("-u 0 --link ${nginx_c.id}:nginx") {
-                sh "apk add --no-cache curl"
-                sh "curl -vk https://nginx/index.html"
-              }
+          docker.image(dockerImageName).withRun() { nginx_c ->
+            sleep 30
+            sh "docker logs ${nginx_c.id}"
+            docker.image('alpine').inside("-u 0 --link ${nginx_c.id}:nginx") {
+              sh "apk add --no-cache curl"
+              sh "curl -vk https://nginx/index.html"
             }
           }
         }
