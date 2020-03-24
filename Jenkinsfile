@@ -70,6 +70,36 @@ pipeline {
         sh "sed 's/__IMAGE_TAG__/${GIT_COMMIT}/g' kubernetes/deployment.tmpl | kubectl --context azure apply --record -f -"
       }
     }
+
+    stage('Build EC2 AMI') {
+      when { branch 'master' }
+      agent {
+        docker {
+          image 'zooniverse/operations:latest'
+          args '-v "$HOME/.ssh/:/home/ubuntu/.ssh" -v "$HOME/.aws/:/home/ubuntu/.aws"'
+        }
+      }
+      steps {
+        script {
+          sh 'cd /operations && ./rebuild.sh http-frontend'
+        }
+      }
+    }
+
+    stage('Deploy to AWS') {
+      when { branch 'master' }
+      agent {
+        docker {
+          image 'zooniverse/operations:latest'
+          args '-v "$HOME/.ssh/:/home/ubuntu/.ssh" -v "$HOME/.aws/:/home/ubuntu/.aws"'
+        }
+      }
+      steps {
+        script {
+          sh 'cd /operations && ./deploy_latest.sh http-frontend'
+        }
+      }
+    }
   }
 
   post {
