@@ -17,6 +17,13 @@ spec:
       containers:
         - name: http-frontend-app
           image: zooniverse/http-frontend:__IMAGE_TAG__
+          resources:
+              requests:
+                memory: "50Mi"
+                cpu: "10m"
+              limits:
+                memory: "50Mi"
+                cpu: "500m"
           ports:
             - containerPort: 80
 ---
