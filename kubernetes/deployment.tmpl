@@ -39,6 +39,9 @@ spec:
                  value: liveness-probe
           ports:
             - containerPort: 80
+          env:
+            - name: LOG_STDOUT
+              value: true
 ---
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
