@@ -41,7 +41,7 @@ spec:
             - containerPort: 80
           env:
             - name: LOG_STDOUT
-              value: true
+              value: "true"
 ---
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
