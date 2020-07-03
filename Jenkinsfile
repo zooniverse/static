@@ -67,6 +67,7 @@ pipeline {
       agent any
       steps {
         sh "sed 's/__IMAGE_TAG__/${GIT_COMMIT}/g' kubernetes/deployment.tmpl | kubectl --context azure apply --dry-run=client --record -f -"
+        sh "kubectl --context azure apply --dry-run=client --record -f kubernetes/ingress/"
       }
     }
 
@@ -75,6 +76,7 @@ pipeline {
       agent any
       steps {
         sh "sed 's/__IMAGE_TAG__/${GIT_COMMIT}/g' kubernetes/deployment.tmpl | kubectl --context azure apply --record -f -"
+        sh "kubectl --context azure apply --record -f kubernetes/ingress/"
       }
     }
 
