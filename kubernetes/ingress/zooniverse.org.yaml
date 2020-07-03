@@ -12,9 +12,25 @@ spec:
   tls:
   - hosts:
     - zooniverse.org
+    - lists.zooniverse.org
+    - status.zooniverse.org
     secretName: zooniverse-org-tls-secret
   rules:
   - host: zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: http-frontend
+          servicePort: 80
+        path: /(.*)
+  - host: lists.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: http-frontend
+          servicePort: 80
+        path: /(.*)
+  - host: status.zooniverse.org
     http:
       paths:
       - backend:
