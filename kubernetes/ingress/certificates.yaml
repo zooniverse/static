@@ -1,14 +1,14 @@
 apiVersion: certmanager.k8s.io/v1alpha1
 kind: Certificate
 metadata:
-  name: fallback-tls-secret
+  name: condorwatch-org-tls
   labels:
     use-azuredns-solver: "true"
 spec:
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer 
-  secretName: fallback-tls-secr
+  secretName: condorwatch-org-tls
   dnsNames:  
     - condorwatch.org
     - "*.condorwatch.org"
@@ -16,14 +16,14 @@ spec:
 apiVersion: certmanager.k8s.io/v1alpha1
 kind: Certificate
 metadata:
-  name: fallback-tls-secret
+  name: operationwardiary-org-tls
   labels:
     use-azuredns-solver: "true"
 spec:
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer 
-  secretName: fallback-tls-secr
+  secretName: operationwardiary-org-tls
   dnsNames:  
     - operationwardiary.org
     - "*.operationwardiary.org"
@@ -31,14 +31,14 @@ spec:
 apiVersion: certmanager.k8s.io/v1alpha1
 kind: Certificate
 metadata:
-  name: fallback-tls-secret
+  name: planetfour-org-tls
   labels:
     use-azuredns-solver: "true"
 spec:
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer 
-  secretName: fallback-tls-secr
+  secretName: planetfour-org-tls
   dnsNames:  
     - planetfour.org
     - "*.planetfour.org"
@@ -46,14 +46,14 @@ spec:
 apiVersion: certmanager.k8s.io/v1alpha1
 kind: Certificate
 metadata:
-  name: fallback-tls-secret
+  name: planktonportal-org-tls
   labels:
     use-azuredns-solver: "true"
 spec:
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer 
-  secretName: fallback-tls-secr
+  secretName: planktonportal-org-tls
   dnsNames:  
     - planktonportal.org
     - "*.planktonportal.org"
@@ -61,14 +61,14 @@ spec:
 apiVersion: certmanager.k8s.io/v1alpha1
 kind: Certificate
 metadata:
-  name: fallback-tls-secret
+  name: setilive-org-tls
   labels:
     use-azuredns-solver: "true"
 spec:
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer 
-  secretName: fallback-tls-secr
+  secretName: setilive-org-tls
   dnsNames:  
     - setilive.org
     - "*.setilive.org"
@@ -76,14 +76,14 @@ spec:
 apiVersion: certmanager.k8s.io/v1alpha1
 kind: Certificate
 metadata:
-  name: fallback-tls-secret
+  name: spacewarps-org-tls
   labels:
     use-azuredns-solver: "true"
 spec:
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer 
-  secretName: fallback-tls-secr
+  secretName: spacewarps-org-tls
   dnsNames:  
     - spacewarps.org
     - "*.spacewarps.org"
@@ -91,14 +91,14 @@ spec:
 apiVersion: certmanager.k8s.io/v1alpha1
 kind: Certificate
 metadata:
-  name: fallback-tls-secret
+  name: volcrowe-org-tls
   labels:
     use-azuredns-solver: "true"
 spec:
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer 
-  secretName: fallback-tls-secr
+  secretName: volcrowe-org-tls
   dnsNames:  
     - volcrowe.org
     - "*.volcrowe.org"
@@ -106,14 +106,14 @@ spec:
 apiVersion: certmanager.k8s.io/v1alpha1
 kind: Certificate
 metadata:
-  name: fallback-tls-secret
+  name: whats-the-score-org-tls
   labels:
     use-azuredns-solver: "true"
 spec:
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer 
-  secretName: fallback-tls-secr
+  secretName: whats-the-score-org-tls
   dnsNames:  
     - whats-the-score.org
     - "*.whats-the-score.org"
@@ -121,14 +121,14 @@ spec:
 apiVersion: certmanager.k8s.io/v1alpha1
 kind: Certificate
 metadata:
-  name: fallback-tls-secret
+  name: wormwatchlab-org-tls
   labels:
     use-azuredns-solver: "true"
 spec:
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer 
-  secretName: fallback-tls-secr
+  secretName: wormwatchlab-org-tls
   dnsNames:  
     - wormwatchlab.org
     - "*.wormwatchlab.org"
