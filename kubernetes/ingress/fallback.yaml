@@ -20,15 +20,15 @@ spec:
     - volcrowe.org
     - whats-the-score.org
     - wormwatchlab.org
-    - *.condorwatch.org
-    - *.operationwardiary.org
-    - *.planetfour.org
-    - *.planktonportal.org
-    - *.setilive.org
-    - *.spacewarps.org
-    - *.volcrowe.org
-    - *.whats-the-score.org
-    - *.wormwatchlab.org
+    - "*.condorwatch.org"
+    - "*.operationwardiary.org"
+    - "*.planetfour.org"
+    - "*.planktonportal.org"
+    - "*.setilive.org"
+    - "*.spacewarps.org"
+    - "*.volcrowe.org"
+    - "*.whats-the-score.org"
+    - "*.wormwatchlab.org"
     secretName: fallback-tls-secret
   rules:
   - http:
