@@ -1,3 +1,22 @@
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: zooniverse-org-tls
+  labels:
+    use-azuredns-solver: "true"
+spec:
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer 
+  secretName: zooniverse-org-tls
+  dnsNames:  
+    - zooniverse.org
+    - lists.zooniverse.org
+    - status.zooniverse.org
+    - "*.staging.zooniverse.org"
+    - "*.preview.zooniverse.org"
+    - "*.pfe-preview.zooniverse.org"
+---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -14,7 +33,10 @@ spec:
     - zooniverse.org
     - lists.zooniverse.org
     - status.zooniverse.org
-    secretName: zooniverse-org-tls-secret
+    - "*.staging.zooniverse.org"
+    - "*.preview.zooniverse.org"
+    - "*.pfe-preview.zooniverse.org"
+    secretName: zooniverse-org-tls
   rules:
   - host: zooniverse.org
     http:
@@ -31,6 +53,27 @@ spec:
           servicePort: 80
         path: /(.*)
   - host: status.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: http-frontend
+          servicePort: 80
+        path: /(.*)
+  - host: "*.staging.zooniverse.org"
+    http:
+      paths:
+      - backend:
+          serviceName: http-frontend
+          servicePort: 80
+        path: /(.*)
+  - host: "*.preview.zooniverse.org"
+    http:
+      paths:
+      - backend:
+          serviceName: http-frontend
+          servicePort: 80
+        path: /(.*)
+  - host: "*.pfe-preview.zooniverse.org"
     http:
       paths:
       - backend:
