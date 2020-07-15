@@ -1,0 +1,46 @@
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: whats-the-score-org-tls
+  labels:
+    use-azuredns-solver: "true"
+spec:
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer 
+  secretName: whats-the-score-org-tls
+  dnsNames:  
+    - whats-the-score.org
+    - "*.whats-the-score.org"
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: whats-the-score.org
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/proxy-buffer-size: "128k"
+    nginx.ingress.kubernetes.io/set-real-ip-from: "10.0.0.0/8"
+spec:
+  tls:
+  - hosts:
+    - whats-the-score.org
+    - "*.whats-the-score.org"
+    secretName: whats-the-score-org-tls
+  rules:
+  - host: whats-the-score.org
+    http:
+      paths:
+      - backend:
+          serviceName: http-frontend
+          servicePort: 80
+        path: /(.*)
+  - host: "*.whats-the-score.org"
+    http:
+      paths:
+      - backend:
+          serviceName: http-frontend
+          servicePort: 80
+        path: /(.*)
