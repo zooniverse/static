@@ -11,8 +11,7 @@ spec:
   secretName: zooniverse-org-tls
   dnsNames:  
     - zooniverse.org
-    - lists.zooniverse.org
-    - status.zooniverse.org
+    - "*.zooniverse.org"
     - "*.staging.zooniverse.org"
     - "*.preview.zooniverse.org"
     - "*.pfe-preview.zooniverse.org"
@@ -31,8 +30,7 @@ spec:
   tls:
   - hosts:
     - zooniverse.org
-    - lists.zooniverse.org
-    - status.zooniverse.org
+    - "*.zooniverse.org"
     - "*.staging.zooniverse.org"
     - "*.preview.zooniverse.org"
     - "*.pfe-preview.zooniverse.org"
@@ -45,14 +43,7 @@ spec:
           serviceName: http-frontend
           servicePort: 80
         path: /(.*)
-  - host: lists.zooniverse.org
-    http:
-      paths:
-      - backend:
-          serviceName: http-frontend
-          servicePort: 80
-        path: /(.*)
-  - host: status.zooniverse.org
+  - host: "*.zooniverse.org"
     http:
       paths:
       - backend:
