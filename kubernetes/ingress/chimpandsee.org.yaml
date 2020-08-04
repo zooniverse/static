@@ -1,0 +1,46 @@
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: chimpandsee-org-tls
+  labels:
+    use-azuredns-solver: "true"
+spec:
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  secretName: chimpandsee-org-tls
+  dnsNames:
+    - chimpandsee.org
+    - "*.chimpandsee.org"
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: chimpandsee.org
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/proxy-buffer-size: "128k"
+    nginx.ingress.kubernetes.io/set-real-ip-from: "10.0.0.0/8"
+spec:
+  tls:
+  - hosts:
+    - chimpandsee.org
+    - "*.chimpandsee.org"
+    secretName: chimpandsee-org-tls
+  rules:
+  - host: chimpandsee.org
+    http:
+      paths:
+      - backend:
+          serviceName: http-frontend
+          servicePort: 80
+        path: /(.*)
+  - host: "*.chimpandsee.org"
+    http:
+      paths:
+      - backend:
+          serviceName: http-frontend
+          servicePort: 80
+        path: /(.*)
