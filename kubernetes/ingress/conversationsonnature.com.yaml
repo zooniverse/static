@@ -1,22 +1,22 @@
 apiVersion: certmanager.k8s.io/v1alpha1
 kind: Certificate
 metadata:
-  name: conversationsonnature-org-tls
+  name: conversationsonnature-com-tls
   labels:
     use-azuredns-solver: "true"
 spec:
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
-  secretName: conversationsonnature-org-tls
+  secretName: conversationsonnature-com-tls
   dnsNames:
-    - conversationsonnature.org
-    - "*.conversationsonnature.org"
+    - conversationsonnature.com
+    - "*.conversationsonnature.com"
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: conversationsonnature.org
+  name: conversationsonnature.com
   annotations:
     kubernetes.io/ingress.class: nginx
     certmanager.k8s.io/cluster-issuer: letsencrypt-prod
@@ -26,18 +26,18 @@ metadata:
 spec:
   tls:
   - hosts:
-    - conversationsonnature.org
-    - "*.conversationsonnature.org"
-    secretName: conversationsonnature-org-tls
+    - conversationsonnature.com
+    - "*.conversationsonnature.com"
+    secretName: conversationsonnature-com-tls
   rules:
-  - host: conversationsonnature.org
+  - host: conversationsonnature.com
     http:
       paths:
       - backend:
           serviceName: http-frontend
           servicePort: 80
         path: /(.*)
-  - host: "*.conversationsonnature.org"
+  - host: "*.conversationsonnature.com"
     http:
       paths:
       - backend:
