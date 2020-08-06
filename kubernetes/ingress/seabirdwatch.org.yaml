@@ -2,8 +2,6 @@ apiVersion: certmanager.k8s.io/v1alpha1
 kind: Certificate
 metadata:
   name: seabirdwatch-org-tls
-  labels:
-    use-azuredns-solver: "true"
 spec:
   issuerRef:
     name: letsencrypt-prod
@@ -11,7 +9,7 @@ spec:
   secretName: seabirdwatch-org-tls
   dnsNames:  
     - seabirdwatch.org
-    - "*.seabirdwatch.org"
+    - www.seabirdwatch.org
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -27,7 +25,7 @@ spec:
   tls:
   - hosts:
     - seabirdwatch.org
-    - "*.seabirdwatch.org"
+    - www.seabirdwatch.org
     secretName: seabirdwatch-org-tls
   rules:
   - host: seabirdwatch.org
@@ -37,7 +35,7 @@ spec:
           serviceName: http-frontend
           servicePort: 80
         path: /(.*)
-  - host: "*.seabirdwatch.org"
+  - host: www.seabirdwatch.org
     http:
       paths:
       - backend:
