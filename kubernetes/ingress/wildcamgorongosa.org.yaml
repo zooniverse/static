@@ -29,7 +29,6 @@ spec:
   - hosts:
     - wildcamgorongosa.org
     - www.wildcamgorongosa.org
-    - blog.wildcamgorongosa.org
     - lab.wildcamgorongosa.org
     - learn.wildcamgorongosa.org
     secretName: wildcamgorongosa-org-tls
@@ -42,13 +41,6 @@ spec:
           servicePort: 80
         path: /(.*)
   - host: "www.wildcamgorongosa.org"
-    http:
-      paths:
-      - backend:
-          serviceName: http-frontend
-          servicePort: 80
-        path: /(.*)
-  - host: "blog.wildcamgorongosa.org"
     http:
       paths:
       - backend:
