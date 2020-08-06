@@ -1,0 +1,46 @@
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: galaxyzoo-org-tls
+  labels:
+    use-azuredns-solver: "true"
+spec:
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer 
+  secretName: galaxyzoo-org-tls
+  dnsNames:  
+    - galaxyzoo.org
+    - "*.galaxyzoo.org"
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: galaxyzoo.org
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/proxy-buffer-size: "128k"
+    nginx.ingress.kubernetes.io/set-real-ip-from: "10.0.0.0/8"
+spec:
+  tls:
+  - hosts:
+    - galaxyzoo.org
+    - "*.galaxyzoo.org"
+    secretName: galaxyzoo-org-tls
+  rules:
+  - host: galaxyzoo.org
+    http:
+      paths:
+      - backend:
+          serviceName: http-frontend
+          servicePort: 80
+        path: /(.*)
+  - host: "*.galaxyzoo.org"
+    http:
+      paths:
+      - backend:
+          serviceName: http-frontend
+          servicePort: 80
+        path: /(.*)
