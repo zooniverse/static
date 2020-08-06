@@ -10,7 +10,6 @@ spec:
   dnsNames:  
     - wildcamgorongosa.org
     - www.wildcamgorongosa.org
-    - blog.wildcamgorongosa.org
     - lab.wildcamgorongosa.org
     - learn.wildcamgorongosa.org
 ---
