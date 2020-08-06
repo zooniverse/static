@@ -2,8 +2,6 @@ apiVersion: certmanager.k8s.io/v1alpha1
 kind: Certificate
 metadata:
   name: wildcamgorongosa-org-tls
-  labels:
-    use-azuredns-solver: "true"
 spec:
   issuerRef:
     name: letsencrypt-prod
@@ -11,7 +9,9 @@ spec:
   secretName: wildcamgorongosa-org-tls
   dnsNames:  
     - wildcamgorongosa.org
-    - "*.wildcamgorongosa.org"
+    - www.wildcamgorongosa.org
+    - lab.wildcamgorongosa.org
+    - learn.wildcamgorongosa.org
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -27,7 +27,9 @@ spec:
   tls:
   - hosts:
     - wildcamgorongosa.org
-    - "*.wildcamgorongosa.org"
+    - www.wildcamgorongosa.org
+    - lab.wildcamgorongosa.org
+    - learn.wildcamgorongosa.org
     secretName: wildcamgorongosa-org-tls
   rules:
   - host: wildcamgorongosa.org
@@ -37,7 +39,21 @@ spec:
           serviceName: http-frontend
           servicePort: 80
         path: /(.*)
-  - host: "*.wildcamgorongosa.org"
+  - host: "www.wildcamgorongosa.org"
+    http:
+      paths:
+      - backend:
+          serviceName: http-frontend
+          servicePort: 80
+        path: /(.*)
+  - host: "lab.wildcamgorongosa.org"
+    http:
+      paths:
+      - backend:
+          serviceName: http-frontend
+          servicePort: 80
+        path: /(.*)
+  - host: "learn.wildcamgorongosa.org"
     http:
       paths:
       - backend:
