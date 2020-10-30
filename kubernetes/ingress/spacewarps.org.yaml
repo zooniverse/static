@@ -1,4 +1,4 @@
-apiVersion: certmanager.k8s.io/v1alpha1
+apiVersion: cert-manager.io/v1alpha1
 kind: Certificate
 metadata:
   name: spacewarps-org-tls
@@ -7,9 +7,9 @@ metadata:
 spec:
   issuerRef:
     name: letsencrypt-prod
-    kind: ClusterIssuer 
+    kind: ClusterIssuer
   secretName: spacewarps-org-tls
-  dnsNames:  
+  dnsNames:
     - spacewarps.org
     - "*.spacewarps.org"
 ---
@@ -19,7 +19,7 @@ metadata:
   name: spacewarps-org
   annotations:
     kubernetes.io/ingress.class: nginx
-    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+    cert-manager.io/cluster-issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/rewrite-target: /$1
     nginx.ingress.kubernetes.io/proxy-buffer-size: "128k"
     nginx.ingress.kubernetes.io/set-real-ip-from: "10.0.0.0/8"
