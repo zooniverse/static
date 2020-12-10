@@ -24,7 +24,7 @@ spec:
   tls:
   - hosts:
     - supernovahunters.org
-    - "*.supernovahunters.org"
+    - www.supernovahunters.org
     secretName: supernovahunters-org-tls
   rules:
   - host: supernovahunters.org
