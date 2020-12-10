@@ -36,7 +36,7 @@ spec:
       - backend:
           serviceName: http-frontend
           servicePort: 80
-        path: /(.*)
+        path: /
   - host: "*.supernovahunters.org"
     http:
       paths:
