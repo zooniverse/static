@@ -11,7 +11,7 @@ spec:
   secretName: supernovahunters-org-tls
   dnsNames:
     - supernovahunters.org
-    - "*.supernovahunters.org"
+    - "www.supernovahunters.org"
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
