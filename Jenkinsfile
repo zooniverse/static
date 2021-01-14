@@ -47,7 +47,7 @@ pipeline {
             sh "docker logs ${nginx_c.id}"
             docker.image('alpine').inside("-u 0 --link ${nginx_c.id}:nginx") {
               sh "apk add --no-cache curl"
-              sh "curl -vk https://nginx/index.html"
+              sh "curl -vk http://nginx/index.html"
             }
           }
         }
