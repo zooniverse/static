@@ -32,3 +32,14 @@ Note: You must provide a host when testing locally or the implicit `localhost` h
 
 Read more at the [Nginx request processing docs](http://nginx.org/en/docs/http/request_processing.html)
 
+#### Simulate the jenkins test step
+
+Use the `test-http` image to replicate the jenkins `Test HTTP response` stage. Uncomment the `test-http` conatiner in the docker-compose yaml.
+
+``` bash
+docker-compose run --rm test-http
+# in the alpine conatiner install curl
+apk add --no-cache curl
+# and test a request to nginx static image
+curl -vk http://nginx/index.html
+```
