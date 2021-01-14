@@ -7,3 +7,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:80"
+  # test-http:
+  #   image: alpine
+  #   links:
+  #     - static:nginx
