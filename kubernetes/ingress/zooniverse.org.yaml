@@ -89,10 +89,241 @@ spec:
           serviceName: http-frontend
           servicePort: 80
         path: /(.*)
+  - host: aggregation-caesar.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: aggregation-caesar
+          servicePort: 80
+        path: /(.*)
+  - host: caesar-staging.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: caesar-staging-app
+          servicePort: 80
+        path: /(.*)
+  - host: caesar.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: caesar-production-app
+          servicePort: 80
+        path: /(.*)
+  - host: cellect-staging.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: cellect-staging-app
+          servicePort: 80
+        path: /(.*)
+  - host: cellect.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: cellect-production-app
+          servicePort: 80
+        path: /(.*)
+  - host: designator-staging.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: designator-staging-app
+          servicePort: 80
+        path: /(.*)
+  - host: designator.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: designator-production-app
+          servicePort: 80
+        path: /(.*)
+  - host: education-api-staging.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: education-api-staging-app
+          servicePort: 80
+        path: /(.*)
+  - host: education-api.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: education-api-production-app
+          servicePort: 80
+        path: /(.*)
+  - host: fe-content-pages.preview.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: zooniverse-org-content-pages-staging
+          servicePort: 80
+        path: /(.*)
+  - host: fe-content-pages.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: zooniverse-org-content-pages-production
+          servicePort: 80
+        path: /(.*)
+  - host: fe-project.preview.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: zooniverse-org-project-staging
+          servicePort: 80
+        path: /(.*)
+  - host: fe-project.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: zooniverse-org-project-production
+          servicePort: 80
+        path: /(.*)
+  - host: grafana-stats.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: zoo-event-stats-grafana
+          servicePort: 80
+        path: /(.*)
+  - host: graphql-stats.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: zoo-event-stats-graphql
+          servicePort: 80
+        path: /(.*)
+  - host: hamlet-staging.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: hamlet-staging
+          servicePort: 80
+        path: /(.*)
+  - host: imgproc.azure.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: image-proc
+          servicePort: 80
+        path: /(.*)
+  - host: interventions-gateway-staging.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: interventions-gateway-staging
+          servicePort: 80
+        path: /(.*)
+  - host: interventions-gateway.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: interventions-gateway-production
+          servicePort: 80
+        path: /(.*)
+  - host: links.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: http-frontend
+          servicePort: 80
+        path: /(.*)
+  - host: notifications-staging.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: sugar-staging-app
+          servicePort: 80
+        path: /(.*)
+  - host: notifications.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: sugar-production-app
+          servicePort: 80
+        path: /(.*)
+  - host: passbolt.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: passbolt
+          servicePort: 80
+        path: /(.*)
+  - host: ses-bounces.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: email-verify
+          servicePort: 80
+        path: /(.*)
+  - host: seven-ten-staging.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: seven-ten-staging-app
+          servicePort: 80
+        path: /(.*)
+  - host: seven-ten.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: seven-ten-production-app
+          servicePort: 80
+        path: /(.*)
+  - host: stats-staging.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: zoo-event-stats-staging
+          servicePort: 80
+        path: /(.*)
+  - host: stats.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: zoo-event-stats-production-api
+          servicePort: 80
+        path: /(.*)
   - host: subject-assistant-proxy.zooniverse.org
     http:
       paths:
       - backend:
           serviceName: subject-assistant-proxy
+          servicePort: 80
+        path: /(.*)
+  - host: theia-staging.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: theia-staging-app
+          servicePort: 80
+        path: /(.*)
+  - host: theia.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: theia-production-app
+          servicePort: 80
+        path: /(.*)
+  - host: thumbnails.azure.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: thumbnailer
+          servicePort: 80
+        path: /(.*)
+  - host: tove-staging.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: tove-staging-app
+          servicePort: 80
+        path: /(.*)
+  - host: tove.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: tove-production-app
           servicePort: 80
         path: /(.*)
