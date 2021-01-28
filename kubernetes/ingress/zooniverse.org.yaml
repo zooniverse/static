@@ -89,3 +89,10 @@ spec:
           serviceName: http-frontend
           servicePort: 80
         path: /(.*)
+  - host: subject-assistant-proxy.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: subject-assistant-proxy
+          servicePort: 80
+        path: /(.*)
