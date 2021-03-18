@@ -125,6 +125,13 @@ spec:
           serviceName: cellect-production-app
           servicePort: 80
         path: /(.*)
+  - host: classroom-maps-api.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: classroom-maps-api-production-app
+          servicePort: 80
+        path: /(.*)
   - host: designator-staging.zooniverse.org
     http:
       paths:
