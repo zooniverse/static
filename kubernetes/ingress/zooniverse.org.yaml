@@ -300,6 +300,13 @@ spec:
           serviceName: subject-assistant-proxy
           servicePort: 80
         path: /(.*)
+  - host: subject-set-search-api.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: subject-set-search-api-production-app
+          servicePort: 80
+        path: /(.*)
   - host: theia-staging.zooniverse.org
     http:
       paths:
