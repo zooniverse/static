@@ -306,7 +306,7 @@ spec:
       - backend:
           serviceName: subject-set-search-api-production-app
           servicePort: 80
-        path: /
+        path: /(.*)
   - host: theia-staging.zooniverse.org
     http:
       paths:
