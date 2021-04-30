@@ -1,7 +1,7 @@
 static
 ======
 
-An nginx caching proxy (mostly) for serving static sites from S3.
+An nginx caching proxy (mostly) for serving static sites from Azure Blob Storage.
 
 Run it locally with Docker:
 
