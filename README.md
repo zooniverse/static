@@ -10,6 +10,17 @@ docker-compose build
 docker-compose up
 ```
 
+Alaternatively start a shell in the container, note the alpine base image so the shell is rather limited. This technique alows you to edit quickly
+
+``` bash
+docker-compose run --rm --service-ports static sh
+# within the shell you can start nginx in non-daemon mode (important for logging)
+nginx -g "daemon off;"
+# Use Ctrl+C and retype cmd above to restart nginx
+# OR
+# reload the nginx conf dynamically via a reload signal, e.g. nginx -s reload  OR kill -S -HUP nginxPID but that requires another shell in the container
+```
+
 And access it at http://localhost:8080/.
 
 #### Testing your changes locally
@@ -31,6 +42,8 @@ curl -v -H "Host: talk.sunspotter.org" http://localhost:8080/users/%E7%8E%8B%E5%
 Note: You must provide a host when testing locally or the implicit `localhost` host header will be used.
 
 Read more at the [Nginx request processing docs](http://nginx.org/en/docs/http/request_processing.html)
+
+Note: to increase the testing server log levels, modify the [error_log]( https://nginx.org/en/docs/ngx_core_module.html#error_log) setting in nginx.conf, e.g. turn debug logging on with `error_log /dev/stderr debug;`,
 
 #### Simulate the jenkins test step
 

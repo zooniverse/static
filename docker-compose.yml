@@ -7,6 +7,9 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:80"
+    volumes:
+      - ./sites/:/etc/nginx/sites/ # inject the sites code into the container
+      - ./conf/:/etc/nginx/ # inject the conf code into the container
   # test-http:
   #   image: alpine
   #   links:
