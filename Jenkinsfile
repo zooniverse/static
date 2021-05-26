@@ -67,7 +67,7 @@ pipeline {
       agent any
       steps {
         sh "sed 's/__IMAGE_TAG__/${GIT_COMMIT}/g' kubernetes/deployment.tmpl | kubectl --context azure apply --dry-run=client --record -f -"
-        sh "for ingress in kubernetes/ingress/*; do kubectl --context azure apply --dry-run=client --record -f ${ingress} && sleep .$[ ( $RANDOM % 10 ) + 1 ]s; done"
+        sh "kubectl --context azure apply --dry-run=client --record -f kubernetes/ingress/"
       }
     }
 
