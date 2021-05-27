@@ -76,7 +76,16 @@ pipeline {
       agent any
       steps {
         sh "sed 's/__IMAGE_TAG__/${GIT_COMMIT}/g' kubernetes/deployment.tmpl | kubectl --context azure apply --record -f -"
-        sh "kubectl --context azure apply --record -f kubernetes/ingress/"
+        sh ""
+        sh '''#!/bin/bash
+              for ingress in kubernetes/ingress/*
+              do
+                kubectl --context azure apply --record -f $ingress
+                pause=$[($RANDOM % 10 ) + 1]
+                # echo "sleeping a random value of 0.${pause} seconds"
+                sleep .${pause}s
+              done
+           '''
       }
     }
   }
