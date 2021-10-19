@@ -13,7 +13,7 @@ spec:
     - ancientlives.org
     - "*.ancientlives.org"
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ancientlives.org
@@ -33,14 +33,20 @@ spec:
   - host: ancientlives.org
     http:
       paths:
-      - backend:
-          serviceName: http-frontend
-          servicePort: 80
-        path: /(.*)
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: http-frontend
+            port:
+              number: 80
   - host: "*.ancientlives.org"
     http:
       paths:
-      - backend:
-          serviceName: http-frontend
-          servicePort: 80
+      - pathType: Prefix
         path: /(.*)
+        backend:
+          service:
+            name: http-frontend
+            port:
+              number: 80
