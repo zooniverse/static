@@ -1,4 +1,4 @@
-FROM zooniverse/nginx
+FROM zooniverse/nginx:1.20
 
 RUN mkdir -p /nginx-cache/  &&  touch /etc/nginx-deny.conf
 
