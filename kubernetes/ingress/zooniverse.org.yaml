@@ -311,7 +311,7 @@ spec:
     http:
       paths:
       - backend:
-          serviceName: theia-production-app
+          serviceName: theia-staging-app
           servicePort: 80
         path: /(.*)
   - host: thumbnails.azure.zooniverse.org
