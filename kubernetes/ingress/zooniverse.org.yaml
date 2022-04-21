@@ -230,6 +230,15 @@ spec:
           serviceName: http-frontend
           servicePort: 80
         path: /(.*)
+
+  - host: mapping-viz-staging.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: tove-production-app
+          servicePort: 80
+        path: /(.*)
+
   - host: notifications-staging.zooniverse.org
     http:
       paths:
