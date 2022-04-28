@@ -1,0 +1,15 @@
+server {
+  include /etc/nginx/ssl.default.conf;
+  server_name mapping-viz-staging.zooniverse.org;
+
+  location / {
+      resolver 1.1.1.1;
+
+      rewrite (?i)\.(jp(e)?g|gif|png|ico|txt|mp(3|4)|webm|og(a|g|m|v|x)|spx|opus|pdf|ttf|tar|gz|tgz|bz2|tbz2|zip|js|css)$ https://static.zooniverse.org/mapping-viz-staging.zooniverse.org$request_uri;
+
+      # This is a hack to get nginx to discard the uri in the proxy request
+      set $uri_path "mapping-viz-staging.zooniverse.org/";
+      proxy_pass https://zooniversestatic.z13.web.core.windows.net/$uri_path;
+      include /etc/nginx/az-proxy-headers.conf;
+  }
+}
