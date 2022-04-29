@@ -66,8 +66,8 @@ pipeline {
     stage('Dry run deployments') {
       agent any
       steps {
-        sh "sed 's/__IMAGE_TAG__/${GIT_COMMIT}/g' kubernetes/deployment.tmpl | kubectl --context azure apply --dry-run=client --record -f -"
-        sh "kubectl --context azure apply --dry-run=client --record -f kubernetes/ingress/"
+        sh "sed 's/__IMAGE_TAG__/${GIT_COMMIT}/g' kubernetes/deployment.tmpl | kubectl --context azure apply --dry-run=client -f -"
+        sh "kubectl --context azure apply --dry-run=client -f kubernetes/ingress/"
       }
     }
 
@@ -75,12 +75,12 @@ pipeline {
       when { branch 'master' }
       agent any
       steps {
-        sh "sed 's/__IMAGE_TAG__/${GIT_COMMIT}/g' kubernetes/deployment.tmpl | kubectl --context azure apply --record -f -"
+        sh "sed 's/__IMAGE_TAG__/${GIT_COMMIT}/g' kubernetes/deployment.tmpl | kubectl --context azure apply -f -"
         sh ""
         sh '''#!/bin/bash
               for ingress in kubernetes/ingress/*
               do
-                kubectl --context azure apply --record -f $ingress
+                kubectl --context azure apply -f $ingress
                 pause=$[($RANDOM % 10 ) + 1]
                 # echo "sleeping a random value of 0.${pause} seconds"
                 sleep .${pause}s
