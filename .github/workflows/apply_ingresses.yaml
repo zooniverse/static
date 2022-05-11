@@ -10,6 +10,13 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
+    - name: Set the target AKS cluster
+      uses: Azure/aks-set-context@v1
+      with:
+        creds: '${{ secrets.creds }}'
+        cluster-name: microservices
+        resource-group: kubernetes
+
     - name: Get current deploy
       run: |
         echo "DEPLOYED_IMAGE_TAG=$(kubectl get deployment http-frontend -o=jsonpath='{$.spec.template.spec.containers[:1].image}' | cut -d':' -f 2)" >> $GITHUB_ENV
