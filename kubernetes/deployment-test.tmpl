@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: http-frontend-test
+  labels:
+    app: http-frontend-test
+spec:
+  selector:
+    matchLabels:
+      app: http-frontend-test
+  template:
+    metadata:
+      labels:
+        app: http-frontend-test
+    spec:
+      containers:
+        - name: http-frontend-app-test
+          image: ghcr.io/zooniverse/http-frontend:__IMAGE_TAG__
+          resources:
+              requests:
+                memory: "250Mi"
+                cpu: "250m"
+              limits:
+                memory: "250Mi"
+                cpu: "500m"
+          livenessProbe:
+             httpGet:
+               path: /
+               port: 80
+               httpHeaders:
+               - name: Host
+                 value: liveness-probe
+          readinessProbe:
+             httpGet:
+               path: /
+               port: 80
+               httpHeaders:
+               - name: Host
+                 value: liveness-probe
+          ports:
+            - containerPort: 80
+          env:
+            - name: LOG_STDOUT
+              value: "true"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: http-frontend-test
+spec:
+  selector:
+    app: http-frontend-test
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: NodePort
