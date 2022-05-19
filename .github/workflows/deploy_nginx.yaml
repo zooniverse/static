@@ -1,6 +1,9 @@
 name: Deploy HTTP Frontend
 
 on:
+  push:
+    tags:
+      - production-release
   workflow_dispatch:
 
 jobs:
