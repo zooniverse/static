@@ -335,3 +335,11 @@ spec:
           serviceName: tove-production-app
           servicePort: 80
         path: /(.*)
+  - host: static-staging.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: http-frontend-staging
+          servicePort: 80
+        path: /(.*)
+
