@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: http-frontend-test
+  name: http-frontend-staging
   labels:
-    app: http-frontend-test
+    app: http-frontend-staging
 spec:
   selector:
     matchLabels:
-      app: http-frontend-test
+      app: http-frontend-staging
   template:
     metadata:
       labels:
-        app: http-frontend-test
+        app: http-frontend-staging
     spec:
       containers:
-        - name: http-frontend-app-test
+        - name: http-frontend-staging-app
           image: ghcr.io/zooniverse/http-frontend:__IMAGE_TAG__
           resources:
               requests:
@@ -46,10 +46,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: http-frontend-test
+  name: http-frontend-staging
 spec:
   selector:
-    app: http-frontend-test
+    app: http-frontend-staging
   ports:
     - protocol: TCP
       port: 80
