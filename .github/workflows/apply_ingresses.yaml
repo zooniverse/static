@@ -1,0 +1,33 @@
+name: Apply Modified Ingresses
+
+on:
+  workflow_dispatch:
+
+jobs:
+  apply_ingresses:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set the target AKS cluster
+      uses: Azure/aks-set-context@v1
+      with:
+        creds: '${{ secrets.creds }}'
+        cluster-name: microservices
+        resource-group: kubernetes
+
+    - name: Get current deploy
+      run: |
+        echo "DEPLOYED_IMAGE_TAG=$(kubectl get deployment http-frontend -o=jsonpath='{$.spec.template.spec.containers[:1].image}' | cut -d':' -f 2)" >> $GITHUB_ENV
+
+    - name: Apply modified ingress files
+      run: |
+        output=$(git diff --name-only $DEPLOYED_IMAGE_TAG ${{ github.sha }})
+        echo $output | while read -r line
+          do
+            if [[ $line = *"kubernetes/ingress/"* ]]; then
+              kubectl apply -f $line
+            fi
+          done
+

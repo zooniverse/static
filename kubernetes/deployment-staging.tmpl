@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: http-frontend-staging
+  labels:
+    app: http-frontend-staging
+spec:
+  selector:
+    matchLabels:
+      app: http-frontend-staging
+  template:
+    metadata:
+      labels:
+        app: http-frontend-staging
+    spec:
+      containers:
+        - name: http-frontend-staging-app
+          image: ghcr.io/zooniverse/http-frontend:__IMAGE_TAG__
+          resources:
+              requests:
+                memory: "250Mi"
+                cpu: "250m"
+              limits:
+                memory: "250Mi"
+                cpu: "500m"
+          livenessProbe:
+             httpGet:
+               path: /
+               port: 80
+               httpHeaders:
+               - name: Host
+                 value: liveness-probe
+          readinessProbe:
+             httpGet:
+               path: /
+               port: 80
+               httpHeaders:
+               - name: Host
+                 value: liveness-probe
+          ports:
+            - containerPort: 80
+          env:
+            - name: LOG_STDOUT
+              value: "true"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: http-frontend-staging
+spec:
+  selector:
+    app: http-frontend-staging
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: NodePort
