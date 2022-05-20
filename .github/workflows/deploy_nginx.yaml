@@ -85,5 +85,5 @@ jobs:
 
       - name: Modify & apply template
         run: |
-          sed "s/__IMAGE_TAG__/${{ github.sha }}/g" ./kubernetes/deployment-test.tmpl \
+          sed "s/__IMAGE_TAG__/${{ github.sha }}/g" ./kubernetes/deployment-staging.tmpl \
             | kubectl apply -f -
