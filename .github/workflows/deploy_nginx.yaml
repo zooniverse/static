@@ -41,9 +41,10 @@ jobs:
       - name: Test nginx config inside container
         run: |
           # Nginx prints on stderr, redirect to stdout
-          status=$(nginx -t 2>&1 | echo $result | grep failed | wc -l)
+          result=$(nginx -t 2>&1)
+          status=$(echo "$result" | grep failed | wc -l)
 
-          if [ $status > 0 ]; then
+          if [ $status -gt 0 ]; then
             echo "Nginx configuration test failed"
             echo "$result"
             exit 1
