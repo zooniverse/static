@@ -40,9 +40,6 @@ jobs:
     steps:
       - name: Test nginx config inside container
         run: |
-          echo "Docker logs:"
-          docker logs
-
           # Nginx prints on stderr, redirect to stdout
           status=$(nginx -t 2>&1 | echo $result | grep failed | wc -l)
 
