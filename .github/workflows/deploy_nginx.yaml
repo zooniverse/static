@@ -49,7 +49,7 @@ jobs:
             echo "$result"
             exit 1
           else
-            "Nginx configuration test successful"
+            echo "Nginx configuration test successful"
           fi
 
   push_latest_tag:
