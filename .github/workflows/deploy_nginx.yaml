@@ -81,6 +81,9 @@ jobs:
           cluster-name: microservices
           resource-group: kubernetes
 
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - name: Modify & apply template
         run: |
           sed "s/__IMAGE_TAG__/${{ github.sha }}/g" ./kubernetes/deployment-staging.tmpl \
