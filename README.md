@@ -43,3 +43,8 @@ apk add --no-cache curl
 # and test a request to nginx static image
 curl -vk http://nginx/index.html
 ```
+
+## Deployment
+The nginx proxy portion of this repo is deployed to staging on pushes to the master branch via a Github Action. Deploys to production occur on pushes to the `production-release` tag and can be initiated via chatops in Slack with `lita deploy static`.
+
+Ingress application also managed via a `production-ingresses` tag. This workflow checks the diff between the currently deployed image and the current head and applies the templates that have changed. This tag can be pushed manually or via chatops with the `lita apply ingresses` command.

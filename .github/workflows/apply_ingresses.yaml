@@ -1,6 +1,9 @@
 name: Apply Modified Ingresses
 
 on:
+  push:
+    tags:
+      - production-ingresses
   workflow_dispatch:
 
 jobs:
