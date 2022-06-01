@@ -1,0 +1,39 @@
+name: Deploy HTTP Frontend
+
+on:
+  push:
+    tags:
+      - production-release
+  workflow_dispatch:
+
+jobs:
+  build_image:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy_nginx:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set the target AKS cluster
+        uses: Azure/aks-set-context@v1
+        with:
+          creds: '${{ secrets.AZURE_AKS }}'
+          cluster-name: microservices
+          resource-group: kubernetes
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Modify & apply template
+        run: |
+          sed "s/__IMAGE_TAG__/${{ github.sha }}/g" ./kubernetes/deployment-production.tmpl \
+            | kubectl apply -f -
