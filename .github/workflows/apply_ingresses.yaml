@@ -44,4 +44,4 @@ jobs:
     - name: Update Ingress Tag
       run: |
         git tag production-ingress-release
-        git push origin --tags
+        git push --force origin --tags

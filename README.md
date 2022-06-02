@@ -47,4 +47,4 @@ curl -vk http://nginx/index.html
 ## Deployment
 The nginx proxy portion of this repo is deployed to staging on pushes to the master branch via a Github Action. Deploys to production occur on pushes to the `production-release` tag and can be initiated via chatops in Slack with `lita deploy static`.
 
-Ingress application also managed via a `production-ingresses` tag. This workflow checks the diff between the currently deployed image and the current head and applies the templates that have changed. This tag can be pushed manually or via chatops with the `lita apply ingresses` command.
+Ingress application also managed via a `production-ingresses` tag, which triggers the Apply Ingresses workflow. This workflow checks the diff between the hash tagged by the `production-ingress-release` tag and the current head and applies the templates that have changed. It then updates the latter tag to indicate the updates have been made. The `production-ingreses` tag can be pushed manually or via chatops with the `lita apply ingresses` command.
