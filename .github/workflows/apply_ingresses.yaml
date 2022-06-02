@@ -27,9 +27,12 @@ jobs:
     - name: Apply modified ingress files
       run: |
         output=$(git diff --name-only $CURRENT_INGRESS_HASH ${{ github.sha }})
+        echo "Output:"
+        echo "$output"
         echo $output | while read -r line
           do
             if [[ $line = *"kubernetes/ingress/"* ]]; then
+              echo "Applying $line..."
               kubectl apply -f $line
             fi
           done
@@ -45,3 +48,16 @@ jobs:
       run: |
         git tag production-ingress-release
         git push --force origin --tags
+
+  deploy_slack_notification:
+    name: Deploy Slack notification
+    uses: zooniverse/ci-cd/.github/workflows/slack_notification.yaml@main
+    needs: update_ingress_tag
+    if: always()
+    with:
+      commit_id: ${{ github.sha }}
+      job_name: apply_ingresses
+      status: ${{ needs.apply_ingresses.result }}
+      title: "Static ingress application complete"
+    secrets:
+      slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}

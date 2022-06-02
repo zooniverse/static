@@ -88,3 +88,17 @@ jobs:
         run: |
           sed "s/__IMAGE_TAG__/${{ github.sha }}/g" ./kubernetes/deployment-staging.tmpl \
             | kubectl apply -f -
+
+  deploy_slack_notification:
+    name: Deploy Slack notification
+    uses: zooniverse/ci-cd/.github/workflows/slack_notification.yaml@main
+    needs: deploy_nginx
+    if: always()
+    with:
+      commit_id: ${{ github.sha }}
+      job_name: deploy_nginx
+      status: ${{ needs.deploy_nginx.result }}
+      title: "HTTP Frontend staging deploy complete"
+      title_link: "https://static-staging.zooniverse.org"
+    secrets:
+      slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
