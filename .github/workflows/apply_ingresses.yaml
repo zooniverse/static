@@ -3,7 +3,7 @@ name: Apply Modified Ingresses
 on:
   push:
     tags:
-      - production-ingresses
+      - production-ingress
   workflow_dispatch:
 
 jobs:
@@ -20,13 +20,13 @@ jobs:
         cluster-name: microservices
         resource-group: kubernetes
 
-    - name: Get current deploy
+    - name: Get last applied ingress hash
       run: |
-        echo "DEPLOYED_IMAGE_TAG=$(kubectl get deployment http-frontend -o=jsonpath='{$.spec.template.spec.containers[:1].image}' | cut -d':' -f 2)" >> $GITHUB_ENV
+        echo "CURRENT_INGRESS_HASH=$(git show-ref --tags | grep production-ingress-release | cut -d ' ' -f 1)" >> $GITHUB_ENV
 
     - name: Apply modified ingress files
       run: |
-        output=$(git diff --name-only $DEPLOYED_IMAGE_TAG ${{ github.sha }})
+        output=$(git diff --name-only $CURRENT_INGRESS_HASH ${{ github.sha }})
         echo $output | while read -r line
           do
             if [[ $line = *"kubernetes/ingress/"* ]]; then
@@ -34,3 +34,14 @@ jobs:
             fi
           done
 
+  update_ingress_tag:
+    runs-on: ubuntu-latest
+    needs: apply_ingresses
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Update Ingress Tag
+      run: |
+        git tag production-ingress-release
+        git push origin --tags
