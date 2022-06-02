@@ -23,7 +23,7 @@ jobs:
     - name: Get last applied ingress hash
       id: get_last_hash
       run: |
-        echo "CURRENT_INGRESS_HASH=$(git show-ref --tags | grep production-ingress-release | cut -d ' ' -f 1)" >> $GITHUB_ENV
+        CURRENT_INGRESS_HASH=$(git show-ref --tags | grep production-ingress-release | cut -d ' ' -f 1)
         echo "::set-output name=ingress_hash::$CURRENT_INGRESS_HASH"
 
     - name: Get changed files
