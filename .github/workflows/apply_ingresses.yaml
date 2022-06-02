@@ -12,6 +12,8 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+      run: |
+        git fetch --prune --unshallow --tags
 
     - name: Set the target AKS cluster
       uses: Azure/aks-set-context@v1
@@ -21,20 +23,13 @@ jobs:
         resource-group: kubernetes
 
     - name: Get last applied ingress hash
-      id: get_last_hash
       run: |
-        CURRENT_INGRESS_HASH=$(git show-ref --tags | grep production-ingress-release | cut -d ' ' -f 1)
-        echo "::set-output name=ingress_hash::$CURRENT_INGRESS_HASH"
-
-    - name: Get changed files
-      id: changed_files
-      run: |
-        output=$(git diff --name-only ${{ steps.get_last_hash.outputs.ingress_hash }} ${{ github.sha }})
-        echo "::set-output name=files::$output"
+        echo "CURRENT_INGRESS_HASH=$(git show-ref --tags | grep production-ingress-release | cut -d ' ' -f 1)" >> $GITHUB_ENV
 
     - name: Apply modified ingress files
       run: |
-        echo "${{ steps.changed_files.outputs.files }}" | while read -r line
+        output=$(git diff --name-only $CURRENT_INGRESS_HASH ${{ github.sha }})
+        echo "$output" | while read -r line
           do
             if [[ $line = *"kubernetes/ingress/"* ]]; then
               echo "Applying $line..."
