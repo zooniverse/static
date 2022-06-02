@@ -3,7 +3,7 @@ name: Apply Modified Ingresses
 on:
   push:
     tags:
-      - production-ingress
+      - production-ingresses
   workflow_dispatch:
 
 jobs:
