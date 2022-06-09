@@ -272,6 +272,13 @@ spec:
           serviceName: seven-ten-production-app
           servicePort: 80
         path: /(.*)
+  - host: static-staging.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: http-frontend-staging
+          servicePort: 80
+        path: /(.*)
   - host: stats-staging.zooniverse.org
     http:
       paths:
@@ -335,11 +342,10 @@ spec:
           serviceName: tove-production-app
           servicePort: 80
         path: /(.*)
-  - host: static-staging.zooniverse.org
+  - host: zoomapper.azure.zooniverse.org
     http:
       paths:
       - backend:
-          serviceName: http-frontend-staging
+          serviceName: zoomapper-production-app
           servicePort: 80
         path: /(.*)
-
