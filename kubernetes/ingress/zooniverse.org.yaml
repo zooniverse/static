@@ -188,6 +188,13 @@ spec:
           serviceName: zooniverse-org-project-production
           servicePort: 80
         path: /(.*)
+  - host: fe-static.zooniverse.org
+    http:
+      paths:
+      - backend:
+          serviceName: zooniverse-org-project-static
+          servicePort: 80
+        path: /(.*)
   - host: grafana-stats.zooniverse.org
     http:
       paths:
