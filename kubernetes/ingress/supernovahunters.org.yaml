@@ -2,6 +2,8 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: supernovahunters-org-tls
+  labels:
+    use-azuredns-solver: "true"
 spec:
   issuerRef:
     name: letsencrypt-prod
@@ -11,7 +13,7 @@ spec:
     - supernovahunters.org
     - www.supernovahunters.org
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: supernovahunters.org
@@ -30,14 +32,20 @@ spec:
   - host: supernovahunters.org
     http:
       paths:
-      - backend:
-          serviceName: http-frontend
-          servicePort: 80
+      - pathType: Prefix
         path: /
+        backend:
+          service:
+            name: http-frontend
+            port:
+              number: 80
   - host: www.supernovahunters.org
     http:
       paths:
-      - backend:
-          serviceName: http-frontend
-          servicePort: 80
+      - pathType: Prefix
         path: /
+        backend:
+          service:
+            name: http-frontend
+            port:
+              number: 80
