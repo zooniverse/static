@@ -227,7 +227,7 @@ spec:
         path: /
         backend:
           service:
-            name: zooniverse-org-content-pages-staging
+            name: zooniverse-org-content-pages-production
             port:
               number: 80
   - host: fe-project.preview.zooniverse.org
@@ -417,7 +417,7 @@ spec:
         path: /
         backend:
           service:
-            name: zoo-event-stats-proxy
+            name: subject-assistant-proxy
             port:
               number: 80
   - host: subject-set-search-api.zooniverse.org
