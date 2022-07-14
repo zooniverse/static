@@ -240,7 +240,7 @@ spec:
             name: zooniverse-org-project-branch
             port:
               number: 80
-    - host: fe-project.preview.zooniverse.org
+  - host: fe-project.preview.zooniverse.org
     http:
       paths:
       - pathType: Prefix
