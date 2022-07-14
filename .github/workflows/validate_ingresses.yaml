@@ -23,7 +23,7 @@ jobs:
         resource-group: kubernetes
 
     - name: Dry-run validation of ingress files
-      run: kubectl apply --dry-run=client -f kubernetes/ingress/*.yaml
+      run: kubectl apply --dry-run=client -f kubernetes/ingress/
 
   deploy_slack_notification:
     name: Deploy Slack notification
