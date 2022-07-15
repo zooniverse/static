@@ -1,0 +1,40 @@
+name: Validate Ingresses
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  validate_ingresses:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Fetch tags for comparison
+      run: |
+        git fetch --prune --unshallow --tags
+
+    - name: Set the target AKS cluster
+      uses: Azure/aks-set-context@v1
+      with:
+        creds: '${{ secrets.AZURE_AKS }}'
+        cluster-name: microservices
+        resource-group: kubernetes
+
+    - name: Dry-run validation of ingress files
+      run: kubectl apply --dry-run=client -f kubernetes/ingress/
+
+  deploy_slack_notification:
+    name: Deploy Slack notification
+    uses: zooniverse/ci-cd/.github/workflows/slack_notification.yaml@main
+    needs: validate_ingresses
+    if: always()
+    with:
+      commit_id: ${{ github.sha }}
+      job_name: validate_ingresses
+      status: ${{ needs.validate_ingresses.result }}
+      title: "Static ingress validation complete"
+      title_link: "https://static.zooniverse.org"
+    secrets:
+      slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
