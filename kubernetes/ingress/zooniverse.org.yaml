@@ -350,6 +350,16 @@ spec:
             name: http-frontend
             port:
               number: 80
+  - host: listmonk.zooniverse.org
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: listmonk
+            port:
+              number: 80
   - host: notifications-staging.zooniverse.org
     http:
       paths:
