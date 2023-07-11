@@ -210,6 +210,26 @@ spec:
             name: education-api-production-app
             port:
               number: 80
+  - host: eras.zooniverse.org
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: eras-production-app
+            port:
+              number: 80
+  - host: eras-staging.zooniverse.org
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: eras-staging-app
+            port:
+              number: 80
   - host: fe-content-pages.preview.zooniverse.org
     http:
       paths:
@@ -328,6 +348,16 @@ spec:
         backend:
           service:
             name: http-frontend
+            port:
+              number: 80
+  - host: listmonk.zooniverse.org
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: listmonk
             port:
               number: 80
   - host: notifications-staging.zooniverse.org
