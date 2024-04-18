@@ -74,10 +74,13 @@ jobs:
     runs-on: ubuntu-latest
     needs: push_latest_tag
     steps:
+      - uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_AKS }}
+
       - name: Set the target AKS cluster
         uses: Azure/aks-set-context@v4.0.0
         with:
-          creds: '${{ secrets.AZURE_AKS }}'
           cluster-name: microservices
           resource-group: kubernetes
 
