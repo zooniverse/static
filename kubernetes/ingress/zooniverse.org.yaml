@@ -280,6 +280,16 @@ spec:
             name: zooniverse-org-project-production
             port:
               number: 80
+  - host: fe-root.preview.zooniverse.org
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: zooniverse-org-root-staging
+            port:
+              number: 80
   - host: fe-static.zooniverse.org
     http:
       paths:
