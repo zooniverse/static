@@ -117,7 +117,7 @@ spec:
         path: /
         backend:
           service:
-            name: aggregation-caesar
+            name: aggregation-production-app
             port:
               number: 80
   - host: caesar-staging.zooniverse.org
