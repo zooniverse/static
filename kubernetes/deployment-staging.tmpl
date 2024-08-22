@@ -16,6 +16,7 @@ spec:
       containers:
         - name: http-frontend-staging-app
           image: ghcr.io/zooniverse/http-frontend:fem-rerouting
+          imagePullPolicy: Always
           resources:
               requests:
                 memory: "250Mi"
