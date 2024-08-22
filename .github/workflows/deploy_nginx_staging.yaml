@@ -1,9 +1,8 @@
 name: Deploy HTTP Frontend Staging
 
 on:
-  push:
-    branches:
-      - master
+  # Temporarily remove on/push/branches/master
+  # to prevent staging deploys from SHA-tagged images
   workflow_dispatch:
 
 jobs:
