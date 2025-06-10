@@ -23,7 +23,7 @@ curl -v -H "Host: www.zooniverse.org" http://localhost:8080/main-54f00afe77a81c4
 Test the default - [first server block](https://github.com/zooniverse/static/blob/1572db64aaeb38d904e1a60de00e9f06871414df/nginx.conf#L69)
 
 ``` bash
-# provide an unkonwn host to test the defaul server block.
+# provide an unknown host to test the default server block.
 # making sure it matches path in the upstream proxy
 curl -v -H "Host: talk.sunspotter.org" http://localhost:8080/users/%E7%8E%8B%E5%8F%AF%E8%90%B1/index.html
 ```
@@ -34,11 +34,11 @@ Read more at the [Nginx request processing docs](http://nginx.org/en/docs/http/r
 
 #### Simulate the jenkins test step
 
-Use the `test-http` image to replicate the jenkins `Test HTTP response` stage. Uncomment the `test-http` conatiner in the docker-compose yaml.
+Use the `test-http` image to replicate the jenkins `Test HTTP response` stage. Uncomment the `test-http` container in the docker-compose yaml.
 
 ``` bash
 docker-compose run --rm test-http
-# in the alpine conatiner install curl
+# in the alpine container install curl
 apk add --no-cache curl
 # and test a request to nginx static image
 curl -vk http://nginx/index.html
