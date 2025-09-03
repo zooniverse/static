@@ -1,4 +1,4 @@
-FROM zooniverse/nginx:1.20
+FROM ghcr.io/zooniverse/docker-nginx:1.29
 
 RUN mkdir -p /nginx-cache/  &&  touch /etc/nginx-deny.conf
 
