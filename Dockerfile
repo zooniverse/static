@@ -1,8 +1,14 @@
 FROM ghcr.io/zooniverse/docker-nginx:1.29
 
+RUN apt-get update && apt-get install -y jq
+
 RUN mkdir -p /nginx-cache/  &&  touch /etc/nginx-deny.conf
 
-ADD nginx.conf /etc/nginx/nginx.conf
+COPY generate-nginx-config.sh /usr/local/bin/
+COPY nginx.conf.template /tmp/
+RUN chmod +x /usr/local/bin/generate-nginx-config.sh && /usr/local/bin/generate-nginx-config.sh
+RUN rm -f /usr/local/bin/generate-nginx-config.sh /tmp/nginx.conf.template
+
 ADD nginx-redirects.conf /etc/nginx/redirects.conf
 ADD nginx-proxy.conf /etc/nginx/proxy.conf
 ADD nginx-proxy-security-headers.conf /etc/nginx/proxy-security-headers.conf
