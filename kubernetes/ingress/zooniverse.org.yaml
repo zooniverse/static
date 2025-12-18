@@ -110,6 +110,16 @@ spec:
             name: http-frontend
             port:
               number: 80
+  - host: aggregation-staging.zooniverse.org
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: aggregation-staging-app
+            port:
+              number: 80
   - host: aggregation-caesar.zooniverse.org
     http:
       paths:
@@ -117,7 +127,7 @@ spec:
         path: /
         backend:
           service:
-            name: aggregation-caesar
+            name: aggregation-production-app
             port:
               number: 80
   - host: caesar-staging.zooniverse.org
@@ -288,6 +298,16 @@ spec:
         backend:
           service:
             name: zooniverse-org-root-staging
+            port:
+              number: 80
+  - host: fe-root.zooniverse.org
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: zooniverse-org-root-production
             port:
               number: 80
   - host: fe-static.zooniverse.org
