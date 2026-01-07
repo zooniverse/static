@@ -1,5 +1,8 @@
 FROM ghcr.io/zooniverse/docker-nginx:1.29
 
+ARG GITHUB_SHA
+RUN mkdir -p /var/www && echo "$GITHUB_SHA" > /var/www/commit_id.txt
+
 RUN mkdir -p /nginx-cache/  &&  touch /etc/nginx-deny.conf
 
 ADD nginx.conf /etc/nginx/nginx.conf
