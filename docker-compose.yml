@@ -2,12 +2,12 @@ version: '3'
 
 services:
   static:
+    platform: linux/amd64
     build:
       context:  ./
       dockerfile: Dockerfile
+      args:
+        # Set in the image build args for staging/prod deploys
+        GITHUB_SHA: asdf1234
     ports:
       - "8080:80"
-  # test-http:
-  #   image: alpine
-  #   links:
-  #     - static:nginx
