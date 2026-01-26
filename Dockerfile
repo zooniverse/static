@@ -11,6 +11,8 @@ ADD nginx-proxy.conf /etc/nginx/proxy.conf
 ADD nginx-proxy-security-headers.conf /etc/nginx/proxy-security-headers.conf
 ADD nginx-project-redirects.conf /etc/nginx/project-redirects.conf
 ADD nginx-pfe-redirects.conf /etc/nginx/pfe-redirects.conf
+ADD nginx-special-redirects.conf /etc/nginx/special-redirects.conf
+ADD nginx-private-project-redirects.conf /etc/nginx/private-project-redirects.conf
 ADD nginx-pfe-staging-redirects.conf /etc/nginx/pfe-staging-redirects.conf
 ADD nginx-s3-proxy-headers.conf /etc/nginx/s3-proxy-headers.conf
 ADD nginx-az-proxy-headers.conf /etc/nginx/az-proxy-headers.conf
