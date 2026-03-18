@@ -13,39 +13,18 @@ spec:
     - planethunters.org
     - "*.planethunters.org"
 ---
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
 metadata:
   name: planethunters.org
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    cert-manager.io/cluster-issuer: letsencrypt-prod
-    nginx.ingress.kubernetes.io/proxy-buffer-size: "128k"
-    nginx.ingress.kubernetes.io/set-real-ip-from: "10.0.0.0/8"
 spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`planethunters.org`) || HostRegexp(`^.+\.planethunters\.org$`)
+      kind: Rule
+      services:
+        - name: http-frontend
+          port: 80
   tls:
-  - hosts:
-    - planethunters.org
-    - "*.planethunters.org"
     secretName: planethunters-org-tls
-  rules:
-  - host: planethunters.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: http-frontend
-            port:
-              number: 80
-  - host: "*.planethunters.org"
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: http-frontend
-            port:
-              number: 80
