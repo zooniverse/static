@@ -1,0 +1,50 @@
+# Traefik equivalent of kubernetes/ingress/fallback.yaml
+# Migration from ingress-nginx to Traefik (v3)
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: frontend-fallback
+  annotations:
+    # Replace ingress class
+    kubernetes.io/ingress.class: traefik
+    # Traefik v3 annotations
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+    # Proxy buffer size - use Traefik's equivalent
+    traefik.ingress.kubernetes.io/proxy-buffer-size: 128k
+    # Real IP from - Traefik uses different annotation
+    traefik.ingress.kubernetes.io/trust-forwarded: "true"
+    traefik.ingress.kubernetes.io/trust-forwarded-for: "true"
+spec:
+  rules:
+  - http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: http-frontend
+            port:
+              number: 80
+
+---
+
+# Alternative: Traefik native CRD (IngressRoute) - more feature-complete
+# This is the recommended approach for Traefik v3
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: frontend-fallback
+  namespace: default
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: PathPrefix("/")
+    kind: Rule
+    services:
+    - name: http-frontend
+      port: 80
+  # Middleware can be added here for additional configuration
+  # middleware:
+  #   - name: proxy-buffer
