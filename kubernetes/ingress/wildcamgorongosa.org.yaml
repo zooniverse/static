@@ -15,61 +15,18 @@ spec:
     - lab.wildcamgorongosa.org
     - learn.wildcamgorongosa.org
 ---
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
 metadata:
   name: wildcamgorongosa.org
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    cert-manager.io/cluster-issuer: letsencrypt-prod
-    nginx.ingress.kubernetes.io/proxy-buffer-size: "128k"
-    nginx.ingress.kubernetes.io/set-real-ip-from: "10.0.0.0/8"
 spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`wildcamgorongosa.org`) || Host(`www.wildcamgorongosa.org`) || Host(`lab.wildcamgorongosa.org`) || Host(`learn.wildcamgorongosa.org`)
+      kind: Rule
+      services:
+        - name: http-frontend
+          port: 80
   tls:
-  - hosts:
-    - wildcamgorongosa.org
-    - www.wildcamgorongosa.org
-    - lab.wildcamgorongosa.org
-    - learn.wildcamgorongosa.org
     secretName: wildcamgorongosa-org-tls
-  rules:
-  - host: wildcamgorongosa.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: http-frontend
-            port:
-              number: 80
-  - host: "www.wildcamgorongosa.org"
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: http-frontend
-            port:
-              number: 80
-  - host: "lab.wildcamgorongosa.org"
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: http-frontend
-            port:
-              number: 80
-  - host: "learn.wildcamgorongosa.org"
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: http-frontend
-            port:
-              number: 80
