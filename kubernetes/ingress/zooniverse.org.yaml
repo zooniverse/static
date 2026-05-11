@@ -18,545 +18,132 @@ spec:
     - "*.lab-preview.zooniverse.org"
     - "*.azure.zooniverse.org"
 ---
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
 metadata:
   name: zooniverse-org-ingress
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    cert-manager.io/cluster-issuer: letsencrypt-prod
-    nginx.ingress.kubernetes.io/proxy-buffer-size: "128k"
-    nginx.ingress.kubernetes.io/proxy-body-size: 6m
-    nginx.ingress.kubernetes.io/set-real-ip-from: "10.0.0.0/8"
+  namespace: default
 spec:
+  entryPoints:
+    - websecure
   tls:
-  - hosts:
-    - zooniverse.org
-    - "*.zooniverse.org"
-    - "*.staging.zooniverse.org"
-    - "*.preview.zooniverse.org"
-    - "*.pfe-preview.zooniverse.org"
-    - "*.lab-preview.zooniverse.org"
-    - "*.azure.zooniverse.org"
     secretName: zooniverse-org-tls
-  rules:
-  - host: zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: http-frontend
-            port:
-              number: 80
-  - host: "*.zooniverse.org"
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: http-frontend
-            port:
-              number: 80
-  - host: "*.staging.zooniverse.org"
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: http-frontend
-            port:
-              number: 80
-  - host: "*.preview.zooniverse.org"
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: http-frontend
-            port:
-              number: 80
-  - host: "*.pfe-preview.zooniverse.org"
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: http-frontend
-            port:
-              number: 80
-  - host: "*.lab-preview.zooniverse.org"
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: http-frontend
-            port:
-              number: 80
-  - host: "*.azure.zooniverse.org"
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: http-frontend
-            port:
-              number: 80
-  - host: aggregation-staging.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: aggregation-staging-app
-            port:
-              number: 80
-  - host: aggregation-caesar.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: aggregation-production-app
-            port:
-              number: 80
-  - host: caesar-staging.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: caesar-staging-app
-            port:
-              number: 80
-  - host: caesar.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: caesar-production-app
-            port:
-              number: 80
-  - host: cellect-staging.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: cellect-staging-app
-            port:
-              number: 80
-  - host: cellect.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: cellect-production-app
-            port:
-              number: 80
-  - host: classroom-maps-api.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: classroom-maps-api-production-app
-            port:
-              number: 80
-  - host: designator-staging.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: designator-staging-app
-            port:
-              number: 80
-  - host: designator.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: designator-production-app
-            port:
-              number: 80
-  - host: education-api-staging.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: education-api-staging-app
-            port:
-              number: 80
-  - host: education-api.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: education-api-production-app
-            port:
-              number: 80
-  - host: eras.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: eras-production-app
-            port:
-              number: 80
-  - host: eras-staging.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: eras-staging-app
-            port:
-              number: 80
-  - host: fe-content-pages.preview.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: zooniverse-org-content-pages-staging
-            port:
-              number: 80
-  - host: fe-content-pages.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: zooniverse-org-content-pages-production
-            port:
-              number: 80
-  - host: fe-project-branch.preview.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: zooniverse-org-project-branch
-            port:
-              number: 80
-  - host: fe-project.preview.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: zooniverse-org-project-staging
-            port:
-              number: 80
-  - host: fe-project.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: zooniverse-org-project-production
-            port:
-              number: 80
-  - host: fe-root.preview.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: zooniverse-org-root-staging
-            port:
-              number: 80
-  - host: fe-root.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: zooniverse-org-root-production
-            port:
-              number: 80
-  - host: fe-static.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: zooniverse-org-project-static
-            port:
-              number: 80
-  - host: grafana-stats.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: zoo-event-stats-grafana
-            port:
-              number: 80
-  - host: graphql-stats.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: zoo-event-stats-graphql
-            port:
-              number: 80
-  - host: imgproc.azure.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: image-proc
-            port:
-              number: 80
-  - host: interventions-gateway-staging.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: interventions-gateway-staging
-            port:
-              number: 80
-  - host: interventions-gateway.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: interventions-gateway-production
-            port:
-              number: 80
-  - host: links.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: http-frontend
-            port:
-              number: 80
-  - host: listmonk.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: listmonk
-            port:
-              number: 80
-  - host: notifications-staging.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: sugar-staging-app
-            port:
-              number: 80
-  - host: notifications.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: sugar-production-app
-            port:
-              number: 80
-  - host: passbolt.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: passbolt
-            port:
-              number: 80
-  - host: ses-bounces.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: email-verify
-            port:
-              number: 80
-  - host: seven-ten-staging.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: seven-ten-staging-app
-            port:
-              number: 80
-  - host: seven-ten.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: seven-ten-production-app
-            port:
-              number: 80
-  - host: static-staging.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: http-frontend-staging
-            port:
-              number: 80
-  - host: stats-staging.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: zoo-event-stats-staging
-            port:
-              number: 80
-  - host: stats.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: zoo-event-stats-production-api
-            port:
-              number: 80
-  - host: subject-assistant-proxy.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: subject-assistant-proxy
-            port:
-              number: 80
-  - host: subject-set-search-api.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: subject-set-search-api-production-app
-            port:
-              number: 80
-  - host: theia-staging.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: theia-staging-app
-            port:
-              number: 80
-  - host: theia.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: theia-production-app
-            port:
-              number: 80
-  - host: thumbnails.azure.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: thumbnailer
-            port:
-              number: 80
-  - host: tove-staging.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: tove-staging-app
-            port:
-              number: 80
-  - host: tove.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: tove-production-app
-            port:
-              number: 80
-  - host: zoomapper.azure.zooniverse.org
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: zoomapper-production-app
-            port:
-              number: 80
+  routes:
+
+    # Manually set priority for catch-alls the specific apps below always win
+    - match: Host(`zooniverse.org`) || HostRegexp(`{sub:[a-z0-9-]+}.zooniverse.org`) || HostRegexp(`{sub:[a-z0-9-]+}.staging.zooniverse.org`) || HostRegexp(`{sub:[a-z0-9-]+}.preview.zooniverse.org`) || HostRegexp(`{sub:[a-z0-9-]+}.pfe-preview.zooniverse.org`) || HostRegexp(`{sub:[a-z0-9-]+}.lab-preview.zooniverse.org`) || HostRegexp(`{sub:[a-z0-9-]+}.azure.zooniverse.org`)
+      kind: Rule
+      priority: 10
+      services:
+        - name: http-frontend
+          port: 80
+
+    # Default, length-based priorities, all greater than 10
+    - match: Host(`aggregation-staging.zooniverse.org`)
+      kind: Rule
+      services: [{name: aggregation-staging-app, port: 80}]
+    - match: Host(`aggregation-caesar.zooniverse.org`)
+      kind: Rule
+      services: [{name: aggregation-production-app, port: 80}]
+    - match: Host(`caesar-staging.zooniverse.org`)
+      kind: Rule
+      services: [{name: caesar-staging-app, port: 80}]
+    - match: Host(`caesar.zooniverse.org`)
+      kind: Rule
+      services: [{name: caesar-production-app, port: 80}]
+    - match: Host(`classroom-maps-api.zooniverse.org`)
+      kind: Rule
+      services: [{name: classroom-maps-api-production-app, port: 80}]
+    - match: Host(`designator-staging.zooniverse.org`)
+      kind: Rule
+      services: [{name: designator-staging-app, port: 80}]
+    - match: Host(`designator.zooniverse.org`)
+      kind: Rule
+      services: [{name: designator-production-app, port: 80}]
+    - match: Host(`education-api-staging.zooniverse.org`)
+      kind: Rule
+      services: [{name: education-api-staging-app, port: 80}]
+    - match: Host(`education-api.zooniverse.org`)
+      kind: Rule
+      services: [{name: education-api-production-app, port: 80}]
+    - match: Host(`eras.zooniverse.org`)
+      kind: Rule
+      services: [{name: eras-production-app, port: 80}]
+    - match: Host(`eras-staging.zooniverse.org`)
+      kind: Rule
+      services: [{name: eras-staging-app, port: 80}]
+    - match: Host(`fe-project-branch.preview.zooniverse.org`)
+      kind: Rule
+      services: [{name: zooniverse-org-project-branch, port: 80}]
+    - match: Host(`fe-project.preview.zooniverse.org`)
+      kind: Rule
+      services: [{name: zooniverse-org-project-staging, port: 80}]
+    - match: Host(`fe-project.zooniverse.org`)
+      kind: Rule
+      services: [{name: zooniverse-org-project-production, port: 80}]
+    - match: Host(`fe-root.preview.zooniverse.org`)
+      kind: Rule
+      services: [{name: zooniverse-org-root-staging, port: 80}]
+    - match: Host(`fe-root.zooniverse.org`)
+      kind: Rule
+      services: [{name: zooniverse-org-root-production, port: 80}]
+    - match: Host(`fe-static.zooniverse.org`)
+      kind: Rule
+      services: [{name: zooniverse-org-project-static, port: 80}]
+    - match: Host(`imgproc.azure.zooniverse.org`)
+      kind: Rule
+      services: [{name: image-proc, port: 80}]
+    - match: Host(`interventions-gateway-staging.zooniverse.org`)
+      kind: Rule
+      services: [{name: interventions-gateway-staging, port: 80}]
+    - match: Host(`interventions-gateway.zooniverse.org`)
+      kind: Rule
+      services: [{name: interventions-gateway-production, port: 80}]
+    - match: Host(`links.zooniverse.org`)
+      kind: Rule
+      services: [{name: http-frontend, port: 80}]
+    - match: Host(`listmonk.zooniverse.org`)
+      kind: Rule
+      services: [{name: listmonk, port: 80}]
+    - match: Host(`notifications-staging.zooniverse.org`)
+      kind: Rule
+      services: [{name: sugar-staging-app, port: 80}]
+    - match: Host(`notifications.zooniverse.org`)
+      kind: Rule
+      services: [{name: sugar-production-app, port: 80}]
+    - match: Host(`passbolt.zooniverse.org`)
+      kind: Rule
+      services: [{name: passbolt, port: 80}]
+    - match: Host(`ses-bounces.zooniverse.org`)
+      kind: Rule
+      services: [{name: email-verify, port: 80}]
+    - match: Host(`seven-ten-staging.zooniverse.org`)
+      kind: Rule
+      services: [{name: http-frontend-staging, port: 80}]
+    - match: Host(`stats.zooniverse.org`)
+      kind: Rule
+      services: [{name: zoo-event-stats-production-api, port: 80}]
+    - match: Host(`subject-assistant-proxy.zooniverse.org`)
+      kind: Rule
+      services: [{name: subject-assistant-proxy, port: 80}]
+    - match: Host(`subject-set-search-api.zooniverse.org`)
+      kind: Rule
+      services: [{name: subject-set-search-api-production-app, port: 80}]
+    - match: Host(`theia-staging.zooniverse.org`)
+      kind: Rule
+      services: [{name: theia-staging-app, port: 80}]
+    - match: Host(`theia.zooniverse.org`)
+      kind: Rule
+      services: [{name: theia-production-app, port: 80}]
+    - match: Host(`thumbnails.azure.zooniverse.org`)
+      kind: Rule
+      services: [{name: thumbnailer, port: 80}]
+    - match: Host(`tove-staging.zooniverse.org`)
+      kind: Rule
+      services: [{name: tove-staging-app, port: 80}]
+    - match: Host(`tove.zooniverse.org`)
+      kind: Rule
+      services: [{name: tove-production-app, port: 80}]
+    - match: Host(`zoomapper.azure.zooniverse.org`)
+      kind: Rule
+      services: [{name: zoomapper-production-app, port: 80}]
