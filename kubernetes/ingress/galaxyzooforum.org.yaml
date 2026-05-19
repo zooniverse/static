@@ -24,7 +24,7 @@ spec:
     - match: Host(`galaxyzooforum.org`) || HostRegexp(`^.+\.galaxyzooforum\.org$`)
       kind: Rule
       services:
-        - name: http-frontend
+        - name: php-nginx
           port: 80
   tls:
     secretName: galaxyzooforum-org-tls
