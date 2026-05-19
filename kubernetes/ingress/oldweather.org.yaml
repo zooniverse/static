@@ -24,7 +24,7 @@ spec:
     - match: Host(`oldweather.org`) || HostRegexp(`^.+\.oldweather\.org$`)
       kind: Rule
       services:
-        - name: http-frontend
+        - name: php-nginx
           port: 80
   tls:
     secretName: oldweather-org-tls

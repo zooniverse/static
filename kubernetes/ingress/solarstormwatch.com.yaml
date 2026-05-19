@@ -24,7 +24,7 @@ spec:
     - match: Host(`solarstormwatch.com`) || HostRegexp(`^.+\.solarstormwatch\.com$`)
       kind: Rule
       services:
-        - name: http-frontend
+        - name: php-nginx
           port: 80
   tls:
     secretName: solarstormwatch-com-tls

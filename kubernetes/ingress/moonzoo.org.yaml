@@ -24,7 +24,7 @@ spec:
     - match: Host(`moonzoo.org`) || HostRegexp(`^.+\.moonzoo\.org$`)
       kind: Rule
       services:
-        - name: http-frontend
+        - name: php-nginx
           port: 80
   tls:
     secretName: moonzoo-org-tls
