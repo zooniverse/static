@@ -138,6 +138,9 @@ spec:
     - match: Host(`thumbnails.azure.zooniverse.org`)
       kind: Rule
       services: [{name: thumbnailer, port: 80}]
+    - match: Host(`thumbnails-staging.zooniverse.org`)
+      kind: Rule
+      services: [{name: thumbnailer-staging, port: 80}]
     - match: Host(`tove-staging.zooniverse.org`)
       kind: Rule
       services: [{name: tove-staging-app, port: 80}]
